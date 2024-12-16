@@ -1,0 +1,19 @@
+{
+  "name": "harkirat-websocket-code",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsc -b && nodemon ./dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/ws": "^8.5.13",
+    "nodemon": "^3.1.9",
+    "typescript": "^5.7.2",
+    "ws": "^8.18.0"
+  }
+}
