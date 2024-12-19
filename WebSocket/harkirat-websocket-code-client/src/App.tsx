@@ -38,33 +38,38 @@ import { useEffect, useRef, useState } from "react";
 // }
 
 // export default App;
-function App(){
-  const [socket,setSocket]=useState<WebSocket>();
-  const inputRef=useRef();
+function App() {
+  // const [socket, setSocket] = useState<WebSocket>();
+  // const inputRef = useRef();
 
-  function SendMessage(){
-    if(!socket)return;
-    const message=inputRef?.current?.value;
-    socket.send(message);//rather than hardcoding the "ping over here we will use UseRef and in that we will extract the curr value in that and that value we will send to backend
-  } 
-  useEffect(()=>{
-    //here we are defifing our socket connect with backend
-    const ws=new WebSocket("http://localhost:8080");
-    setSocket(ws);
-
-    ws.onmessage=((ev)=>{
-      alert(ev);
+  // function SendMessage(){
+  //   if(!socket)return;
+  //   const message=inputRef?.current?.value;
+  //   socket.send(message);//rather than hardcoding the "ping over here we will use UseRef and in that we will extract the curr value in that and that value we will send to backend
+  // } 
+  const [ws, setWs] = useState<WebSocket>();
+  const [message, setMessage] = useState(' ');
+  function SendMessage() {
+    ws?.send(message);
+  }
+  useEffect(() => {
+    //here we are defining our socket connect with backend
+    const ws = new WebSocket("ws://localhost:8080");
+    setWs(ws);
+    ws.onmessage = ((ev) => {
+      console.log(ev.data);
+      setMessage(message);
+      ws.send(message);
     })
-
-    return(()=>{
+    return (() => {
       ws.close();
     })
-  },[])
+  }, [])
 
   return (
     <div>
-       <input ref={inputRef} type="text" placeholder="Message..." />
-       <button onClick={SendMessage}>send</button>
+      <input type="text" placeholder="Message..." />
+      <button onClick={SendMessage}>send</button>
     </div>
   )
 }
